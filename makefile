@@ -11,8 +11,9 @@ LIBS = -L../ -L../../ -L../../../ -L/usr/local/lib
 # CFLAGS = -Wall -O3 -fPIC --shared -DJEMALLOC -ljemalloc -Wl,-rpath,. -Wl,-rpath,.. -Wl,-rpath,/usr/local/lib
 # CFLAGS = -Wall -O3 -fPIC --shared -DTCMALLOC -ltcmalloc -Wl,-rpath,. -Wl,-rpath,.. -Wl,-rpath,/usr/local/lib
 CFLAGS = -Wall -O3 -fPIC --shared -Wl,-rpath,. -Wl,-rpath,.. -Wl,-rpath,/usr/local/lib
+DLL = -lcore -lxlsxio_read -lxlsxio_write
 
 # 构建lxlsx.so依赖库
 build:
-	@$(CC) -o lxlsx.so lxlsx.c $(CFLAGS) $(INCLUDES) $(LIBS) -lcore -lxlsxio_read -lxlsxio_write
+	@$(CC) -o lxlsx.so lxlsx.c lxlsx_reader.c lxlsx_writer.c lxlsx_sheet.c $(CFLAGS) $(INCLUDES) $(LIBS) $(DLL)
 	@mv *.so ../
