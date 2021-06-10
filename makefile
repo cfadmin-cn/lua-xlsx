@@ -15,5 +15,5 @@ DLL = -lcore -lxlsxio_read -lxlsxio_write
 
 # 构建lxlsx.so依赖库
 build:
-	@$(CC) -o lxlsx.so lxlsx.c lxlsx_reader.c lxlsx_writer.c lxlsx_sheet.c $(CFLAGS) $(INCLUDES) $(LIBS) $(DLL)
+	@$(CC) -o lxlsx.so lxlsx.c lxlsx_reader.c lxlsx_writer.c $(CFLAGS) $(INCLUDES) $(LIBS) $(DLL)
 	@mv *.so ../

@@ -1,21 +1,7 @@
 #include "lxlsx.h"
 
-// 释放XLSX SHEET对象
-static int lxlsx_sheet_gc(lua_State *L) {
-  struct xlsx_sheet_ctx* ctx = luaL_checkudata(L, 1, "__XLSX__");
-  if (!ctx)
-    return 0;
-
-  if (ctx->sheet) {
-    xlsxioread_sheet_close(ctx->sheet);
-    ctx->sheet = NULL;
-  }
- 
-  return 0;
-}
-
 // 释放XLSX对象内存
-static int lxlsx_gc(lua_State *L) {
+static int lgc(lua_State *L) {
   struct xlsx_ctx* ctx = luaL_checkudata(L, 1, "__XLSX__");
   if (!ctx)
     return 0;
@@ -48,24 +34,7 @@ static int lversion(lua_State *L) {
   return 2;
 }
 
-static inline void lua_init_xlsx_sheet(lua_State *L) {
-  luaL_newmetatable(L, "__XLSX_SHEET__");
-  lua_pushstring (L, "__index");
-  lua_pushvalue(L, -2);
-  lua_rawset(L, -3);
-  lua_pushliteral(L, "__mode");
-  lua_pushliteral(L, "kv");
-  lua_rawset(L, -3);
-  lua_pushliteral(L, "__gc");
-  lua_pushcfunction(L, lxlsx_sheet_gc);
-  lua_rawset(L, -3);
-
-  lua_pop(L, 1);
-  return ;
-}
-
 static inline void lua_init_xlsx(lua_State *L) {
-  lua_init_xlsx_sheet(L);
   luaL_newmetatable(L, "__XLSX__");
   lua_pushstring (L, "__index");
   lua_pushvalue(L, -2);
@@ -74,13 +43,19 @@ static inline void lua_init_xlsx(lua_State *L) {
   lua_pushliteral(L, "kv");
   lua_rawset(L, -3);
   lua_pushliteral(L, "__gc");
-  lua_pushcfunction(L, lxlsx_gc);
+  lua_pushcfunction(L, lgc);
   lua_rawset(L, -3);
   luaL_Reg lxlsx_lib[] = {
     {"read_open", lropen},
     {"write_open", lwopen},
-    {"open_sheet", lopen_sheet},
     {"get_sheets_name", lget_sheets_name},
+    {"get_all_rows", lget_all_rows},
+    {"add_title", ladd_title},
+    {"add_column", ladd_column},
+    {"add_column_datetime", ladd_column_datetime},
+    {"next_line", lnext_line},
+    {"set_column_height", lset_column_height},
+    {"close", lgc},
     {"version", lversion},
     {NULL, NULL},
   };
