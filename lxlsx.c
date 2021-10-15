@@ -33,7 +33,7 @@ static int lversion(lua_State *L) {
   return 2;
 }
 
-static inline void lua_init_xlsx(lua_State *L) {
+static inline void luaL_init_lxlsx(lua_State *L) {
   luaL_newmetatable(L, "__XLSX__");
   lua_pushstring (L, "__index");
   lua_pushvalue(L, -2);
@@ -52,21 +52,16 @@ static inline void lua_init_xlsx(lua_State *L) {
     {"get_sheet_all", lget_sheet_all},
     {"next_line", lnext_line},
     {"add_column", ladd_column},
-    // {"add_title", ladd_title},
-    // {"add_column_datetime", ladd_column_datetime},
-    // {"set_column_height", lset_column_height},
-    // {"version", lversion},
     {NULL, NULL},
   };
   luaL_setfuncs(L, lxlsx_lib, 0);
   lua_pop(L, 1);
-
   return;
 }
 
 LUAMOD_API int luaopen_lxlsx(lua_State *L) {
   luaL_checkversion(L);
-  lua_init_xlsx(L);
+  luaL_init_lxlsx(L);
   luaL_Reg lxlsx_lib2[] = {
     {"new", lxlsx_new},
     {"version", lversion},
