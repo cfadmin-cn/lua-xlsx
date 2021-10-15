@@ -10,22 +10,16 @@ typedef struct xlsx_ctx {
   xlsxioreader reader;
 }xlsx_ctx;
 
+// 以只读方式打开文件
 int lropen(lua_State *L);
-// 获取工作簿所有数据
-int lget_all_rows(lua_State *L);
 // 获取所有工作簿名称
 int lget_sheets_name(lua_State *L);
+// 获取指定工作簿所有数据
+int lget_sheet_all(lua_State *L);
 
+// 以只写的方式打开文件
 int lwopen(lua_State *L);
-// 添加工作簿字段名
-int ladd_title(lua_State *L);
-// 添加工作簿的字符串列字段
+// 当前游标写入一个单元格数据
 int ladd_column(lua_State *L);
-// 添加工作簿的日期时间列字段
-int ladd_column_datetime(lua_State *L);
-// 换行
+// 设置行尾然后将游标换行
 int lnext_line(lua_State *L);
-// 指定行高
-int lset_column_height(lua_State *L);
-// 指定间距
-int lset_column_detection(lua_State *L);

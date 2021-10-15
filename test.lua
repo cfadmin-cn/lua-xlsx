@@ -1,24 +1,17 @@
-local lxlsx = require "lua-xlsx"
-local LOG = require "logging"
+require "utils"
 
--- 写入数据
-local writer = lxlsx.write_open("my.xlsx", "sheet1")
-writer:set_column_height(10)
-writer:add_title("column-1", 5)
-writer:add_title("column-2", 10)
-writer:add_title("column-3", 15)
-writer:next_line()
-writer:add_column_datetime(os.time())
-writer:add_column_datetime(os.time())
-writer:add_column_datetime(os.time())
-writer:next_line()
-writer:close()
+local lxlsx = require "lxlsx"
 
---读取数据
-LOG:DEBUG(lxlsx.version())
-LOG:DEBUG(lxlsx.get_sheets_name("my.xlsx"))
+local xls = lxlsx:new()
 
-local reader = lxlsx.read_open("my.xlsx")
-LOG:DEBUG(reader:get_all_rows("sheet1"))
+assert(xls:wopen("test.xlsx", "sheet1"))
+xls:add_column("名称"); xls:add_column("公司"); xls:add_column("年龄")
+xls:next_line()
+xls:add_column("水果糖"); xls:add_column("Netease"); xls:add_column("30")
+xls:next_line()
+xls:add_column("中二丸"); xls:add_column("未知"); xls:add_column("26")
+xls:close()
 
-LOG:INFO("over.")
+assert(xls:ropen("test.xlsx"))
+var_dump(xls:get_sheets_name())
+var_dump(xls:get_sheet_all("sheet1"))

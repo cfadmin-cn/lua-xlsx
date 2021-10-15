@@ -15,7 +15,6 @@ static int lgc(lua_State *L) {
     xlsxiowrite_close(ctx->writer);
     ctx->writer = NULL;
   }
-
   return 0;
 }
 
@@ -46,17 +45,17 @@ static inline void lua_init_xlsx(lua_State *L) {
   lua_pushcfunction(L, lgc);
   lua_rawset(L, -3);
   luaL_Reg lxlsx_lib[] = {
-    {"read_open", lropen},
-    {"write_open", lwopen},
-    {"get_sheets_name", lget_sheets_name},
-    {"get_all_rows", lget_all_rows},
-    {"add_title", ladd_title},
-    {"add_column", ladd_column},
-    {"add_column_datetime", ladd_column_datetime},
-    {"next_line", lnext_line},
-    {"set_column_height", lset_column_height},
+    {"ropen", lropen},
+    {"wopen", lwopen},
     {"close", lgc},
-    {"version", lversion},
+    {"get_sheets_name", lget_sheets_name},
+    {"get_sheet_all", lget_sheet_all},
+    {"next_line", lnext_line},
+    {"add_column", ladd_column},
+    // {"add_title", ladd_title},
+    // {"add_column_datetime", ladd_column_datetime},
+    // {"set_column_height", lset_column_height},
+    // {"version", lversion},
     {NULL, NULL},
   };
   luaL_setfuncs(L, lxlsx_lib, 0);
