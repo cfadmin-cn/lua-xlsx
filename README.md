@@ -4,7 +4,13 @@
 
 ## 安装方法
 
-  请参考[这里](https://github.com/brechtsanders/xlsxio#building-from-source)
+  1. 使用`apt`、`yum`等工具安装`libexpat`、`minizip`/`libzip`(二选一);
+
+  2. 下载`xlsxio`并且解压, 然后使用`CMAKE`构建并安装;
+
+  3. 将本库克隆到`cfadmin`的`3rd`目录下, 并且使用`make build`命令进行编译.
+
+  4. 开始使用.
 
 ## API 介绍
 
