@@ -2,6 +2,10 @@
 
   基于[xlsxio](https://github.com/brechtsanders/xlsxio)实现的`Lua`版`xlsx`读写库.
 
+## 安装方法
+
+  请参考[这里](https://github.com/brechtsanders/xlsxio#building-from-source)
+
 ## API 介绍
 
   ```lua
